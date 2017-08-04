@@ -10,7 +10,8 @@ for ii=1:length(dirNames)
    cfiles = dir('*.c');
    for jj=1:length(cfiles)
        fprintf('Compiling %s \n',cfiles(jj).name)
-       mex(cfiles(jj).name);
+       mex(cfiles(jj).name, '-compatibleArrayDims', '-v'); % for compatibility with R2017a
+%        mex(cfiles(jj).name);
    end
    cd(parent_dir)
 end
