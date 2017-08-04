@@ -169,8 +169,8 @@ function O = intervalSet(varargin)
       cnvrt = 1;
   end
   
-  O.start = cnvrt * s;
-  O.stop = cnvrt * e;
+  O.start = double(cnvrt * s);
+  O.stop = double(cnvrt * e);
   O.units = units('time', 'ts');
   O = class(O, 'intervalSet');
 
