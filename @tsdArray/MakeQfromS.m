@@ -1,4 +1,4 @@
-function Q = MakeQfromS(S,bin,varargin)
+function Q = MakeQfromS(S, bin, varargin)
 
 % Spike train binning
 %  	

@@ -1,23 +1,28 @@
-function is = timeSpan(S)
+function is = timeSpan(S, type)
 
-%  Returns interval spanning the duration of the tsdArray
+%  Returns interval spanning the entire duration of the tsdArray. It uses the
+%  intervalSets stored inside each TSD, and based on the union (default) or 
+%  intersection of those, it calculates a single interval that goes from
+%  the first start to the last end, with no gaps inbetween.
 %  	
 %  	USAGE:
-%  	is = timeSpan(tsa)
+%  	is = tsa.timeSpan(type)
 %  	
+%   INPUTS:
+%   type (optional) - 'union' (default) or 'intersection'
+%
 %  	OUTPUT:
 %  	is - an intervalSet object
 %  
-%  copyright (c) 2009 Adrien Peyrache adrien.peyrache@gmail.com
+%  v2.0 rewritten by Luke Sjulson, Aug 2017
 
-T_start = inf;
-T_end = -inf;
 
-for iC = 1:length(S.C)
-	if ~isempty(Data(S.C{iC}))
-	T_start = min(T_start, StartTime(S.C{iC}));
-	T_end = max(T_end, EndTime(S.C{iC}));
-	end
+if nargin<2
+    type = 'union';
 end
 
-is = intervalSet(T_start,T_end);
+% calculate union/intersection of whole tsdArray
+iSet = S.timeInterval(type);
+is = intervalSet(iSet.start(1), iSet.stop(end));
+
+

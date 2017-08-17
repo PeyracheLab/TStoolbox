@@ -1,25 +1,19 @@
-function L = tot_length(O, TimeUnits);
+function L = tot_length(O)
 
 %  Returns total length of intervalSet
 %  
 %  	USAGE:
-%  	L = tot_length(O, TimeUnits), 
+%  	L = tot_length(A)
+%
+%   or 
+%
+%   L = A.tot_length();
 %  	
-%  	Returns the total length in the units specified by TimeUnits
-%  	(defaults to ts)
-
+%
 % copyright (c) 2004 Francesco P. Battaglia
 % This software is released under the GNU GPL
 % www.gnu.org/copyleft/gpl.html
+%
+% v2.0, Luke Sjulson Aug 2017
 
-  
-  if nargin == 1
-    TimeUnits = time_units('ts');
-  else 
-    TimeUnits = time_units(TimeUnits);
-  end
-  
-  
-  
-
-  L = sum(End(O, TimeUnits) - Start(O, TimeUnits));
+L = sum(End(O) - Start(O));

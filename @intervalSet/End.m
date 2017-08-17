@@ -1,4 +1,6 @@
 function S = End(O, TimeUnits)
+% function S = End(O, TimeUnits)
+
 
 %  Ending time of the intervalSet object
 %  
@@ -13,24 +15,26 @@ function S = End(O, TimeUnits)
 % This software is released under the GNU GPL
 % www.gnu.org/copyleft/gpl.html
 
+S = [O.stop]';
 
-  if nargin < 1 | nargin > 2
-    error('Call with one or two arguments');
-  end
-  
- if nargin == 1
-    TimeUnits = time_units('ts');
-  end  
-  
-  S = O.stop;
-  
-  if isa(TimeUnits, 'char')
-    TimeUnits = time_units(TimeUnits);
-  end
-  
-  cnvrt = convert(O.units, TimeUnits);
-  
-  if cnvrt ~= 1
-    S = S * cnvrt;
-  end
+% 
+%   if nargin < 1 | nargin > 2
+%     error('Call with one or two arguments');
+%   end
+%   
+%  if nargin == 1
+%     TimeUnits = time_units('ts');
+%   end  
+%   
+%   S = O.stop;
+%   
+%   if isa(TimeUnits, 'char')
+%     TimeUnits = time_units(TimeUnits);
+%   end
+%   
+%   cnvrt = convert(O.units, TimeUnits);
+%   
+%   if cnvrt ~= 1
+%     S = S * cnvrt;
+%   end
   

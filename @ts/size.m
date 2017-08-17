@@ -18,6 +18,5 @@ function sz = size(TSA)
 % This software is released under the GNU GPL
 % www.gnu.org/copyleft/gpl.html
 
-  
-  sz=  size(Range(TSA));
+sz = size(Range(TSA));
   

@@ -1,4 +1,4 @@
-function p = peaks(tsa, varargin)
+function p = FindPeaks(tsa, varargin)
 
 %  Get peaks in data
 %  	
@@ -65,7 +65,7 @@ function p = peaks(tsa, varargin)
     d = abs(d);
   end
   
-  p = tsd(t, d);
+  p = tsd(t, d, 'timeInterval', tsa.timeInterval);
   
     
   

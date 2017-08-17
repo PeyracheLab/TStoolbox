@@ -11,7 +11,7 @@ function SO = map(S, cmd_string, varargin)
 % referred to as TSO. Further arguments may be used in cmd_string, and
 % may be passed to map as arguments following cmd_string. In cmd_string,
 % they must be referred to %1, %2, etc. Admittedly a dirty hack, but the
-% only way to mimick passing a function object... 
+% only way to mimic passing a function object... 
   
 % copyright (c) 2004 Francesco P. Battaglia
 % This software is released under the GNU GPL

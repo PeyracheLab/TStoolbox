@@ -1,11 +1,12 @@
 function t = unique(tsa)
 
-%  Eliminates points with the same timestamps
-%  	
+%  Eliminates points with the same timestamps. This is the overloaded
+%  version for TSDs.
+%
 %  	USAGE:
-%  	t = unique(tsa) 
-%  	
-%  	INPUTS:  
+%  	t = unique(tsa)
+%
+%  	INPUTS:
 %  	tsa: a tsd object
 
 % copyright (c) 2006 Francesco P. Battaglia
@@ -13,9 +14,7 @@ function t = unique(tsa)
 % www.gnu.org/copyleft/gpl.html
 
 
- tim = Range(tsa);
- [tt, ix, j] = unique(tim);
+tim = Range(tsa);
+[tt, ix, j] = unique(tim);
 
-
- t = subset(tsa, ix);
- 
+t = subset(tsa, ix);

@@ -9,9 +9,8 @@ for ii=1:length(dirNames)
    cd([dirNames{ii} filesep 'private'])
    cfiles = dir('*.c');
    for jj=1:length(cfiles)
-       fprintf('Compiling %s \n',cfiles(jj).name)
-       mex(cfiles(jj).name, '-compatibleArrayDims', '-v'); % for compatibility with R2017a
-%        mex(cfiles(jj).name);
+       fprintf('Compiling %s \n',cfiles(jj).name);
+       mex(cfiles(jj).name, '-compatibleArrayDims', '-v'); % -comparibleArrayDims required for R2017a and later
    end
    cd(parent_dir)
 end

@@ -17,20 +17,20 @@ function ft = FirstTime(O, TimeUnits)
 % www.gnu.org/copyleft/gpl.html
   
   
-  if nargin < 1 | nargin > 2
-    error('Call with one or two arguments');
-  end
-  
-  if nargin == 1
-    TimeUnits = time_units('ts');
-  end  
+%   if nargin < 1 | nargin > 2
+%     error('Call with one or two arguments');
+%   end
+%   
+%   if nargin == 1
+%     TimeUnits = time_units('ts');
+%   end  
   
   ft = O.start(1);
   
-  TimeUnits = time_units(TimeUnits);
-  
-  cnvrt = convert(O.units, TimeUnits);
-  
-  if cnvrt ~= 1
-    ft = ft * cnvrt;
-  end
+%   TimeUnits = time_units(TimeUnits);
+%   
+%   cnvrt = convert(O.units, TimeUnits);
+%   
+%   if cnvrt ~= 1
+%     ft = ft * cnvrt;
+%   end

@@ -17,20 +17,20 @@ function lt = LastTime(O, TimeUnits)
 % www.gnu.org/copyleft/gpl.html
   
   
-  if nargin < 1 | nargin > 2
-    error('Call with one or two arguments');
-  end
-  
-  if nargin == 1
-    TimeUnits = time_units('ts');
-  end  
+%   if nargin < 1 | nargin > 2
+%     error('Call with one or two arguments');
+%   end
+%   
+%   if nargin == 1
+%     TimeUnits = time_units('ts');
+%   end  
   
   lt = O.stop(end);
   
-  TimeUnits = time_units(TimeUnits);
-  
-  cnvrt = convert(O.units, TimeUnits);
-  
-  if cnvrt ~= 1
-    lt = lt * cnvrt;
-  end
+%   TimeUnits = time_units(TimeUnits);
+%   
+%   cnvrt = convert(O.units, TimeUnits);
+%   
+%   if cnvrt ~= 1
+%     lt = lt * cnvrt;
+%   end

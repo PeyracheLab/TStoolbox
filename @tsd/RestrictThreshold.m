@@ -15,10 +15,13 @@ function [tso, ix] = RestrictThreshold(tsa, thr, varargin)
 %  	
 %  	OPTIONS:
 %  	'Direction' - possible values are 'Above' (default) 'Below'
-
+%
 % copyright (c) 2004 Francesco P. Battaglia
 % This software is released under the GNU GPL
 % www.gnu.org/copyleft/gpl.html
+%
+% v2.0 Luke Sjulson Aug 2017
+
 
  opt_varargin = varargin;
  
@@ -27,12 +30,12 @@ function [tso, ix] = RestrictThreshold(tsa, thr, varargin)
  
  getOpt;
  
- is = threshold_intervals(tsa, thr, 'Direction', Direction);
+ is = thresholdIntervals(tsa, thr, 'Direction', Direction);
  
  [tso, il] = Restrict(tsa, is);
  
  if nargout == 2
-   ix= il;
+   ix = il;
  end
    
   

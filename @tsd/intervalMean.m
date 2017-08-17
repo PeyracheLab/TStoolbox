@@ -12,7 +12,9 @@ function im = intervalMean(tsa, is, varargin)
 %  	OUTPUTS: 
 %  	im 	- a tsd object, where the timestamps correspond to each interval 
 %  		(see OPTIONS for possibilities) and the data gives the mean of data
-%  		in the tsd in each one of the intervals
+%  		in the tsd in each one of the intervals. The output intervals are
+%  		the intersection of the input intervalSet with the TSD's
+%  		intervalSet.
 %  	
 %  	OPTIONS:
 %  	'time' determines which time is selected for each interval, possible
@@ -20,12 +22,13 @@ function im = intervalMean(tsa, is, varargin)
 %  		'start'  - use start of intervals (default)
 %  		'end'    - use end of intervals
 %  		'middle' - use middle point of intervals
-
-  
+% 
 % copyright (c) 2004 Francesco P. Battaglia
 % This software is released under the GNU GPL
 % www.gnu.org/copyleft/gpl.html
-  
+%
+% v2.0, Luke Sjulson Aug 2017. Removed units.
+
   opt_varargin = varargin;
   
   
@@ -35,6 +38,8 @@ function im = intervalMean(tsa, is, varargin)
   defined_options = dictArray({ { 'Time', {'start', {'char'} } } } );
   
   getOpt;
+  
+  is = is.intersect(tsa.timeInterval);
   
   d = Data(tsa);
   
@@ -47,12 +52,12 @@ function im = intervalMean(tsa, is, varargin)
   
 % $$$   if ~isLinearArray(d)
     d = permute(d, [(2:n_dim) 1]); % transpose d so that time index will be
-				   % major index, mkaing it easier to deal
+				   % major index, making it easier to deal
 				   % with it in C
 % $$$   end
   
   im = intervalMean_c(Range(tsa), d, ...
-		      Start(is, tsa.time_unit), End(is, tsa.time_unit));
+		      Start(is), End(is));
   
 % $$$   if ~isLinearArray(d)
 
@@ -63,11 +68,11 @@ function im = intervalMean(tsa, is, varargin)
   
   switch Time
    case 'start'
-    t_im = Start(is, tsa.time_unit);
+    t_im = Start(is);
    case 'end'
-    t_im = End(is, tsa.time_unit);
+    t_im = End(is);
    case 'middle'
-    t_im = ( Start(is, tsa.time_unit) + End(is, tsa.time_unit) ) / 2;
+    t_im = ( Start(is) + End(is) ) / 2;
   end
   
-  im = tsd(t_im, im);
+  im = tsd(t_im, im, 'timeInterval', is);

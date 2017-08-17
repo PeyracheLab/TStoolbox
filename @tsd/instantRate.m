@@ -1,33 +1,21 @@
-function ir = instantRate(tsa, TimeUnits)
+function ir = instantRate(tsa)
 
 %  Computes instantaneous rate as the inverse of inter-event interval
-%  	
+%
 %  	USAGE:
-%  	ir = instantRate(tsa, TimeUnits)
-%  	
+%  	ir = instantRate(tsa)
+%
 %  	INPUTS:
 %  	tsa 	  - a tsd object
-%  	TimeUnits - a units object or the abbreviation string
-%  	
+%
 %  	OUTPUT:
-%  	ir - a tsd object where the data contains the instantaneous rate in the
-%  	     units specified by TimeUnits (to the -1)
-
+%  	ir - a tsd object where the data contains the instantaneous rate
+%
 % copyright (c) 2004 Francesco P. Battaglia
 % This software is released under the GNU GPL
 % www.gnu.org/copyleft/gpl.html
-  
+%
+% v2.0 Luke Sjulson, Aug 2017 - removed units, added timeInterval
 
-  
-  if nargin == 1
-    TimeUnits = time_units('s');
-  else 
-    TimeUnits = units(TimeUnits);
-  end
-  
-  
-  t = Range(tsa, TimeUnits);
-  
-  ir = tsd(t(1:end-1), 1./diff(t));
-  
-  
+ir = tsd(tsa.t(1:end-1), 1./diff(tsa.t), 'timeInterval', tsa.timeInterval);
+

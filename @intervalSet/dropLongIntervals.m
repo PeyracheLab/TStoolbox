@@ -20,17 +20,17 @@ function iso = dropLongIntervals(is, thr, varargin)
   
   
   
-  opt_varargin = varargin;
-  
-  defined_options = dictArray( ...
-  { { 'TimeUnits', {time_units('ts'), {'char', 'units'} } } } );
-  
-  getOpt;  
-  
-  
-  cnvrt = convert(TimeUnits, is.units);
-  
-  thr = thr * cnvrt;
+%   opt_varargin = varargin;
+%   
+%   defined_options = dictArray( ...
+%   { { 'TimeUnits', {time_units('ts'), {'char', 'units'} } } } );
+%   
+%   getOpt;  
+%   
+%   
+%   cnvrt = convert(TimeUnits, is.units);
+%   
+%   thr = thr * cnvrt;
   
   st = Start(is);
   en = End(is);

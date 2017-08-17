@@ -21,21 +21,20 @@ function iso = mergeCloseIntervals(is, thr, varargin)
   
   opt_varargin = varargin;
   
-  defined_options = dictArray( ...
-  { { 'TimeUnits', {time_units('ts'), {'char', 'units'} } } } );
-  
+%   defined_options = dictArray( ...
+%   { { 'TimeUnits', {time_units('ts'), {'char', 'units'} } } } );
+  defined_options = dictArray();
   getOpt;  
   
-  
-  cnvrt = convert(TimeUnits, is.units);
-  
-  thr = thr * cnvrt;
+%   cnvrt = convert(TimeUnits, is.units);
+%   
+%   thr = thr * cnvrt;
 
 if length(is.start)>0
   
   tsp = timeSpan(is);
   
-  df = tsp- is;
+  df = tsp - is;
   
   df = dropShortIntervals(df, thr);
   

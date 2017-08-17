@@ -39,7 +39,7 @@ else
   error('shift must have as many elements as there are intervalSet  objs to cat');
 end
 
-shift = Range(shift, 'ts');
+shift = Range(shift);
 
 start = zeros(0,1);
 stop = zeros(0,1);

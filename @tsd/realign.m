@@ -1,52 +1,55 @@
 function O = realign(tsa, varargin)
 
-%  Realign timestamps  
-%  	
+%  Realign timestamps
+%
 %  	USAGE
-%  	tso = realign(tsa, OptionName, OptionValue) 
-%  	
+%  	tso = realign(tsa, OptionName, OptionValue)
+%
 %  	INPUTS:
 %  	O: a tsd object
-%  	
-%  	OUTPUTS: 
-%  	O: the realigned tsd  
-%  	
+%
+%  	OUTPUTS:
+%  	O: the realigned tsd
+%
 %  	OPTIONS:
 %  	'ZeroFirst' - if set to non-zero, the timestamp will be realigned so
-%  		that the first timestamp corresponds to zero  
+%  		that the first timestamp corresponds to zero
 %  	'ZeroLast'  - if set to non-zero, the timestamp will be realigned so
-%  		that the last timestamp corresponds to zero  
+%  		that the last timestamp corresponds to zero
 %  	'ZeroAt'    - if set to non-zero, the timestamp will be realigned so
-%  		that the specified value will correspond to zero 
-
+%  		that the specified value will correspond to zero
+%
 % copyright (c) 2004 Francesco P. Battaglia
 % This software is released under the GNU GPL
 % www.gnu.org/copyleft/gpl.html
-  
-  
-  opt_varargin = varargin;
+%
+% v2.0, Luke Sjulson, Aug 2017. Added support for intervalSet in TSD.
 
-  defined_options = dictArray({ { 'ZeroFirst', {0, {'numeric'} } }, 
-		                { 'ZeroLast', {0, {'numeric'} } },
-		                { 'ZeroAt', {0, {'numeric'} } } });
-  
-  getOpt;
-  
-  if ((ZeroFirst ~= 0) + (ZeroLast ~= 0) + (ZeroAt ~= 0)) ~= 1
+opt_varargin = varargin;
+
+defined_options = dictArray({ { 'ZeroFirst', {0, {'numeric'} } },
+    { 'ZeroLast', {0, {'numeric'} } },
+    { 'ZeroAt', {0, {'numeric'} } } });
+
+getOpt;
+
+if ((ZeroFirst ~= 0) + (ZeroLast ~= 0) + (ZeroAt ~= 0)) ~= 1
     error('Set exactly one option among ZeroFirst, ZeroLast, ZeroAt');
-  end
-  
-  
-  t = tsa.t;
-  
-  if ZeroFirst ~= 0
+end
+
+
+t = tsa.t;
+
+if ZeroFirst ~= 0
+    iSet = tsa.timeInterval.shift(-t(1));
     t = t - t(1);
-  elseif ZeroLast ~= 0
+elseif ZeroLast ~= 0
+    iSet = tsa.timeInterval.shift(-t(end));
     t = t - t(end);
-  elseif ZeroAt
+elseif ZeroAt
+    iSet = tsa.timeInterval.shift(-ZeroAt);
     t = t - ZeroAt;
-  end
-  
-  O = tsd(t, tsa.data);
-  
-    
+end
+
+O = tsd(t, tsa.data, 'timeInterval', iSet);
+

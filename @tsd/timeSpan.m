@@ -1,33 +1,26 @@
-function is = timeSpan(tsa, TimeUnits)
+function is = timeSpan(tsa)
 
-%  Returns interval spanning the duration of a TSD
-%  	
+%  Returns interval spanning the entire duration of a TSD, from the first
+%  time point to the last time point. This is in contrast to tsd.timeInterval, 
+%  which is the intervalSet the TSD is defined over. 
+%
 %  	USAGE
-%  	is = timeSpan(tsa) 
-%  	
+%  	is = timeSpan(tsa)
+%
 %  	INPUTS:
 %  	tsa 	  - a tsd object
-%  	TimeUnits - the time units for the result  
-%  	
+%
 %  	OUTPUT:
-%  	is - intervalSet containing the timestamp 
+%  	is - intervalSet containing the timestamp
 
 % copyright (c) 2004 Francesco P. Battaglia
 % This software is released under the GNU GPL
 % www.gnu.org/copyleft/gpl.html
+%
+% v2.0, Luke Sjulson, Aug 2017. 
 
-  
-  error(nargchk( 1, 2, nargin));
-  
-  if nargin == 1
-    TimeUnits = time_units('ts');
-  end
-  
-    
-    
-  if isa(TimeUnits, 'char');
-    TimeUnits = time_units(TimeUnits);
-  end
-  
-  
-  is = intervalSet(StartTime(tsa), EndTime(tsa));
+
+
+is = intervalSet(StartTime(tsa), EndTime(tsa));
+warning('tsd.timeSpan() returns the interval between the first and last time points. tsd.timeInterval returns the actual intervalSet.');
+
