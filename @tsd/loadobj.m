@@ -24,22 +24,12 @@
 function B = loadobj(A)
 
 if any(strcmp(properties(A), 'version')) && A.version == 2
-    disp('Loading tsdArray v2.0');
+    disp('Loading tsd v2.0');
     B = A;
 else
-    disp('Converting tsdArray from v1.0 to v2.0...');
-    B = tsdArray(A.C);
-%     B = A;
-%     for idx = 1:length(A.C)
-%         if strcmp(A.C{idx}.type, 'ts')
-%             S{idx} = ts(A.C{idx}.tsd.t, 'vers', 1); % add version etc.
-%         elseif strcmp(A.C{idx}.type, 'tsd')
-% %             S{idx} = tsd(A.C{idx}.tsd.t, A.C{idx}.tsd.data, 'vers', 1, 'Name', A.C{idx}.tsd.name); % add version etc.
-%             S{idx} = tsd(A.C{idx}.tsd.t, A.C{idx}.tsd.data, 'vers', 1); % add version etc.
-% 
-%         end
-%     end
-%     B = tsdArray(S);
+%     keyboard
+    disp('Converting tsd from v1.0 to v2.0...');
+    B = tsd(A.t, A.data, 'vers', 1, 'Name', A.name);
 end
 
 
