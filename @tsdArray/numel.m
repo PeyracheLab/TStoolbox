@@ -4,6 +4,6 @@ function n = numel(A)
 %
 % v2.0, Luke Sjulson, 8/2017
 
-n = prod(A.size);
+n = prod(A.size)
 
 
