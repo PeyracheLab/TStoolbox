@@ -64,7 +64,7 @@ classdef tsd
                     { 'keepUnordered', { 0, { 'numeric' } } },
                     { 'Name', { '', { 'char' } } },
                     { 'timeInterval', {[], { 'intervalSet' } } },
-                    { 'vers', { 0, { 'numeric' } } } });
+                    { 'vers', { 2, { 'numeric' } } } });
                 
                 %                     dictArray({ { 'fixOrder', { 0, { 'numeric' } } },
                 %                     { 'keepUnordered', { 0, { 'numeric' } } },
