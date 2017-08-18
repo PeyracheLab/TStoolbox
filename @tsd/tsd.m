@@ -41,7 +41,7 @@ classdef tsd
     end
     methods
         function tsa = tsd(t, data, varargin)
-            tsa.version = 2.0;
+            %             tsa.version = 2.0;
             
             if nargin == 0
                 tsa.t = NaN;
@@ -63,18 +63,28 @@ classdef tsd
                     dictArray({ { 'fixOrder', { 0, { 'numeric' } } },
                     { 'keepUnordered', { 0, { 'numeric' } } },
                     { 'Name', { '', { 'char' } } },
-                    { 'timeInterval', {[], { 'intervalSet' } } } });
+                    { 'timeInterval', {[], { 'intervalSet' } } },
+                    { 'vers', { 0, { 'numeric' } } } });
+                
+                %                     dictArray({ { 'fixOrder', { 0, { 'numeric' } } },
+                %                     { 'keepUnordered', { 0, { 'numeric' } } },
+                %                     { 'Name', { '', { 'char' } } },
+                %                     { 'timeInterval', {[], { 'intervalSet' } } } });
+                
+                
                 
                 opt_varargin = varargin;
                 getOpt;
                 if isempty(timeInterval)
                     timeInterval = intervalSet(min(t), max(t));
                 end
+                tsa.version = vers;
             else
                 fixOrder = 0;
                 keepUnordered = 0;
                 Name = '';
                 timeInterval = intervalSet(min(t), max(t));
+                tsa.version = 2;
             end
             
             if isempty(t)
@@ -86,7 +96,7 @@ classdef tsd
                 error('t must b row or column error');
             end
             
-            if size(data, 1) ~= length(t) & (~isempty(data))
+            if size(data, 1) ~= length(t) && (~isempty(data))
                 error('data must be N x X x Y x ..., where N is length(t), or empty');
             end
             
@@ -132,7 +142,7 @@ classdef tsd
                     tsa.data = [];
                     tsa.data_info = 'empty dataset';
                 end
-
+                
                 tsa.t_info = 'time points';
                 tsa.timeInterval_info = 'intervalSet over which data is defined';
             end
