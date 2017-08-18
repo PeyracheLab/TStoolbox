@@ -13,7 +13,7 @@ function iSet = timeInterval(S, type)
 %   v2.0, Luke Sjulson, Aug 2017
 
 
-if nargin<2
+if nargin<2 || isempty(type)
     type = 'union';
 end
 
