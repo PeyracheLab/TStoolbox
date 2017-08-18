@@ -73,6 +73,7 @@ elseif strcmp(S(1).type, '()')
    B = A.C(S.subs{:});
    B = tsdArray(B);
    
+   % for calling methods
 elseif strcmp(S(1).type, '.')
    if length(S)==1
       B = feval(S.subs, A);
