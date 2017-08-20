@@ -21,43 +21,25 @@ function r = rate(tsa, varargin)
 
 iSet = [];
 if ~isempty(varargin)
-    if isa(varargin{1}, 'intervalSet')
-        iSet = varargin{1};
-%         if length(varargin) > 2
-%             varargin = varargin(2:end);
-%         else
-%             varargin = {};
-%         end
-    end
+   if isa(varargin{1}, 'intervalSet')
+      iSet = varargin{1};
+      %         if length(varargin) > 2
+      %             varargin = varargin(2:end);
+      %         else
+      %             varargin = {};
+      %         end
+   elseif isa(varargin{1}{1}, 'intervalSet')
+      iSet = varargin{1}{1};
+   end
+else iSet = tsa.timeInterval;
 end
-
-% opt_varargin = varargin;
-% 
-% defined_options = dictArray(  );
-% 
-% getOpt;
-
-
 
 if ~isempty(iSet)
-    tsa = Restrict(tsa, iSet);
+   tsa = Restrict(tsa, iSet);
 end
 
-t = tsa.t;
-if ~isempty(t)
-    
-    if ~isempty(iSet)
-        l = tot_length(tsa.timeInterval);
-    elseif length(t)>1
-        l = t(end) - t(1);
-    else
-        l = eps;
-    end
-    
-    if l == 0
-        l = eps;
-    end
-    r = length(t) / l;
+if ~isempty(tsa.t)
+   r = length(tsa.t) / tot_length(tsa.timeInterval);
 else
-    r = 0;
+   r = 0;
 end
