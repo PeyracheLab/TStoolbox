@@ -51,6 +51,10 @@ classdef tsd
                 return
             end
             
+            if isinteger(data)
+               warning('tsd''s can now store integer data, but not all methods have been tested with ints');
+            end
+            
             if nargin < 2
                 error('tsd constructor must be called with t, data');
             end
