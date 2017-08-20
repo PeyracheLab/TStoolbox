@@ -96,11 +96,11 @@ elseif strcmp(S(1).type, '.') % for calling tsdArray methods using dot syntax
          [varargout{1:nargout(S(1).subs)}] = feval(S(1).subs, A);
       end
       
-   elseif length(S) > 1 && strcmp(S(2).type,'()') % property/method gets arguments
+   elseif length(S)==2 && strcmp(S(2).type,'()') % property/method gets arguments
       if all(isprop(A, S(1).subs)) % it's a property
          error('subsref does not support indexing properties of tsdArrays');
       else % it's a method
-         [varargout{1:nargout(S(1).subs)}] = feval(S(1).subs, A, S(2).subs);
+         [varargout{1:nargout(S(1).subs)}] = feval(S(1).subs, A, S(2).subs{:});
       end
       
    else error('subsref does not handle that type of indexing');
