@@ -19,6 +19,9 @@ function R = SelectAlongFirstDimension(IN, f)
 
 % new version Francesco P. Battaglia 2004
 % now can handle empty matrices 
+
+% v2.0, Luke Sjulson, Aug 2017
+% does not assume double type - can work with int16 matrices as well
   
 if isempty(IN)
   R = [];
@@ -30,7 +33,7 @@ sz = size(IN);
 dim1 = sz(1);
 dimRest = sz(2:length(sz));
 
-tmpMatrix = double(reshape(IN, [dim1 prod(dimRest)]));
+tmpMatrix = reshape(IN, [dim1 prod(dimRest)]);
 
 nonnan = find(~isnan(f));
 yesnan = find(isnan(f));
