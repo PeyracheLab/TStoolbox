@@ -1,4 +1,4 @@
-function R = Range(tsa)
+function R = Range(tsa, tsflag)
 
 % Returns TSD timestamps
 % 
@@ -38,6 +38,10 @@ function R = Range(tsa)
 %   else
 %     R = tsa.t;
 %   end
+
+if nargin>1
+    warning('Range no longer supports units');
+end
 
 R = tsa.t;
   

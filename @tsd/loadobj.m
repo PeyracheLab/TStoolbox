@@ -28,7 +28,7 @@ if any(strcmp(properties(A), 'version')) && A.version == 2
     B = A;
 else
 %     keyboard
-    disp('Converting tsd from v1.0 to v2.0...');
+%     disp('Converting tsd from v1.0 to v2.0...');
     B = tsd(A.t, A.data, 'vers', 1, 'Name', A.name);
 end
 

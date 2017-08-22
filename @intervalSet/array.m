@@ -1,6 +1,5 @@
 function A = array(O, TimeUnits)
 
-%  No comprendo
 %
 %  	USAGE:
 %  	S = array(O, TimeUnits)%
