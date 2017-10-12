@@ -136,7 +136,7 @@ if Sparse
 end
 
 if Rate
-	duration = (en-st)/10000;
+	duration = en-st;
 	dQ = dQ./(duration*ones(1,size(dQ,2)));
 end
 
