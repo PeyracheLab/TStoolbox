@@ -28,7 +28,7 @@ if any(strcmp(properties(A), 'version')) && A.version == 2
     B = A;
 else
 %     keyboard
-    disp('Converting intervalSet from v1.0 to v2.0...');
+%     disp('Converting intervalSet from v1.0 to v2.0...');
     B = intervalSet(A.start, A.stop);
 end
 
