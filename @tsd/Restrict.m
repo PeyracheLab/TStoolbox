@@ -6,7 +6,12 @@ function [R, ix] = Restrict(tsa, timeInterval)
 % released under the GPL
 %
 % rewritten by Luke Sjulson, 2017. Removed functionality by which one TSD
-% can be restricted against another TSD.
+% can be restricted against another TSD and placed this in the method called
+% align()
+
+if isa(timeInterval, 'tsd') || isa(timeInterval, 'tsdArray')
+    error('The functionality to restrict one tsd against another is now in "align()"');
+end
 
 timeInterval = timeInterval.intersect(tsa.timeInterval);
 if isempty(timeInterval.start)
@@ -28,7 +33,7 @@ else
     tt = tsa.t(ix);
     
     
-    % timeInterval in the new TSD is the intersection of the olt timeInterval
+    % timeInterval in the new TSD is the intersection of the old timeInterval
     % with the new timeInterval
     if isa(tsa, 'ts')
         R = ts(tt, 'timeInterval', timeInterval.intersect(tsa.timeInterval));
@@ -36,3 +41,6 @@ else
         R = tsd(tt, SelectAlongFirstDimension(tsa.data, ix), 'timeInterval', timeInterval.intersect(tsa.timeInterval));
     end
 end
+
+
+
