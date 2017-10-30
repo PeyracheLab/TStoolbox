@@ -39,9 +39,22 @@ function R = Range(tsa, tsflag)
 %     R = tsa.t;
 %   end
 
-if nargin>1
-    warning('Range no longer supports units');
+if nargin<2
+    tsflag = 's';
 end
 
-R = tsa.t;
+if strcmpi(tsflag, 's') 
+    R = tsa.t;
+elseif strcmpi(tsflag, 'ms')
+    R = tsa.t .* 1000;
+elseif strcmpi(tsflag, 'm') || strcmpi(tsflag, 'min')
+    R = tsa.t ./ 60;
+elseif strcmpi(tsflag, 'h') || strcmpi(tsflag, 'hr')
+    R = tsa.t ./ (60*60);
+else 
+    error('unit flag not recognized');
+end
+
+
+
   
