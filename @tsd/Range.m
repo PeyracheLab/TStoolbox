@@ -43,9 +43,9 @@ if nargin<2
     tsflag = 's';
 end
 
-if strcmpi(tsflag, 's') 
+if strcmpi(tsflag, 's') || strcmpi(tsflag, 'sec')
     R = tsa.t;
-elseif strcmpi(tsflag, 'ms')
+elseif strcmpi(tsflag, 'ms') || strcmpi(tsflag, 'msec')
     R = tsa.t .* 1000;
 elseif strcmpi(tsflag, 'm') || strcmpi(tsflag, 'min')
     R = tsa.t ./ 60;
