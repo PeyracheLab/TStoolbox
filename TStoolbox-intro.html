@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<title></title>
+	<meta name="generator" content="LibreOffice 4.2.8.2 (Linux)">
+	<meta name="author" content="luke ">
+	<meta name="created" content="20170330;121908843035843">
+	<meta name="changedby" content="luke ">
+	<meta name="changed" content="20170330;145558250352094">
+</head>
+<body lang="en-US" dir="ltr" style="background: transparent">
+<p align="center"><font size="4" style="font-size: 14pt"><b>Introduction
+to TStoolbox</b></font></p>
+<p><br><br>
+</p>
+<p>TStoolbox (TS for “Time Stamp”) is a class library for dealing
+with neurophysiological data that consists either of timestamps (e.g.
+spike times) or data collected at specific time points (e.g. animal's
+position). TStoolbox is object-oriented, meaning that it is organized
+around objects instead of functions. An object is simply a struct
+where its associated functions are inside the struct instead of
+outside. This makes it easier to keep track of which functions work
+with which data types, as well as preventing confusion between
+different functions with the same name. Object-oriented programming
+(OOP) is the dominant paradigm in industry because it encourages code
+reusability by making code modular. More importantly, it forces you
+to do things in a certain way that simplifies things, makes code
+easier to read, and prevents you from making common mistakes. 
+</p>
+<p>In OOP, you start with “classes” and create “objects” from
+a particular class. Using TStoolbox requires you to understand a few
+different classes:</p>
+<p><b>IntervalSet</b></p>
+<p>IntervalSet is a class containing start and end times for multiple
+time intervals. This is used to store states of the animal or events
+that have a beginning and end, and it allows you to extract spikes
+associated with those intervals. In OOP, to create an object from
+scratch you need to call a function called a “constructor”. In
+this case, the constructor is called IntervalSet(). For example:</p>
+<p><font face="Droid Sans Mono, sans-serif"><font size="2" style="font-size: 11pt">duringAllRipples
+= IntervalSet(rippleStartTimes, rippleEndTimes); <font color="#009900">%
+rippleStartTimes and rippleEndTimes are vectors of times when ripples
+begin and end</font></font></font></p>
+<p><font face="Droid Sans Mono, sans-serif"><font size="2" style="font-size: 11pt">isAwake
+= IntervalSet(startTimes, endTimes); <font color="#009900">%
+startTimes and endTimes are vectors of times when the animal enters
+and exits the awake state</font></font></font></p>
+<p>TStoolbox allows you to combine and manipulate intervals and
+extract spikes associated with those intervals. For example, if you
+want to extract all spikes that occur during wake ripples:</p>
+<p><font face="Droid Sans Mono, sans-serif"><font size="2" style="font-size: 11pt">duringWakeRipples
+= duringAllRipples.intersect(isAwake); <font color="#009900">% making
+a new IntervalSet that is the intersection of two IntervalSets</font></font></font></p>
+<p><font face="Droid Sans Mono, sans-serif"><font size="2" style="font-size: 11pt">wakeRippleSpikes
+= AllSpikes.restrict(duringWakeRipples); <font color="#009900">%
+AllSpikes is an object of class TSDArray used to store spike times
+(see below)</font></font></font></p>
+<p>To get a list of IntervalSet's methods, you can either go to the
+documentation (insert link) or create an IntervalSet, then type its
+name followed by a period, then press tab to see a list. One
+important aspect of an IntervalSet is that once it is created, you
+can not change the start and end times stored inside. This is a
+feature, not a bug, because it prevents mistakes. Since you can't
+change an IntervalSet, manipulating the information inside requires
+you have to create a new IntervalSet. In the above example, we used
+the method intersect() to create a new IntervalSet called
+duringWakeRipples. If you want to do something simple like shift all
+the intervals by one second, you need to use a method called shift()
+to create a new IntervalSet:</p>
+<p><font face="Droid Sans Mono, sans-serif"><font size="2" style="font-size: 11pt">shiftedIntervalSet
+= oldIntervalSet.shift(1);</font></font></p>
+<p style="font-weight: normal">To extract the data from an
+IntervalSet, use</p>
+<p style="font-weight: normal"><font face="Droid Sans Mono, sans-serif"><font size="2" style="font-size: 11pt">rippleStartTimeVector
+= duringAllRipples.start();</font></font></p>
+<p style="font-weight: normal"><font face="Droid Sans Mono, sans-serif"><font size="2" style="font-size: 11pt">rippleEndTimeVector
+= duringAllRipples.end();</font></font></p>
+<p style="font-weight: normal"><br><br>
+</p>
+<p><b>TSD</b></p>
+<p>TSD is a class that contains <b>T</b>ime<b>S</b>tamps + <b>D</b>ata.
+This is used to store data where you have a value that is sampled at
+each time point, e.g. an animal's X, Y position in space. To create a
+TSD, 
+</p>
+<p><font face="Droid Sans Mono, sans-serif"><font size="2" style="font-size: 11pt">XpositionTSD
+= TSD(timeStampVector, XpositionVector);</font></font></p>
+<p><font face="Droid Sans Mono, sans-serif"><font size="2" style="font-size: 11pt">XYZpositionTSD
+= TSD(timeStampVector, [XpositionVector YpositionVector
+ZpositionVector]); <font color="#009900">% you can also store a
+matrix of data</font></font></font></p>
+<p>Like an IntervalSet, once you create the TSD, you can not change
+the data inside, only create a new TSD. For example, 
+</p>
+<p><font face="Droid Sans Mono, sans-serif"><font size="2" style="font-size: 11pt">speedTSD
+= TSD(timeStampVector, runningSpeedVector);</font></font></p>
+<p><font face="Droid Sans Mono, sans-serif"><font size="2" style="font-size: 11pt">isRunning
+= speedTSD.thresholdIntervals(5, <font color="#9933ff">'Direction'</font>,
+<font color="#9933ff">'Above'</font>); <font color="#009900">%
+creates IntervalSet indicating when animal's running speed is over 5</font></font></font></p>
+<p><font face="Droid Sans Mono, sans-serif"><font size="2" style="font-size: 11pt">runningXYZpositionTSD
+= XYZpositionTSD.restrict(isRunning); <font color="#009900">% creates
+a new TSD containing only position measurements when the animal's
+running speed is over 5</font></font></font></p>
+<p><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">To
+extract data from a TSD, use</font></font></p>
+<p><font face="Droid Sans Mono, sans-serif"><font size="2" style="font-size: 11pt">timeStampVector
+= XpositionTSD.timeStamps();</font></font></p>
+<p><font face="Droid Sans Mono, sans-serif"><font size="2" style="font-size: 11pt">XpositionVector
+= XpositionTSD.data();</font></font></p>
+<p><br><br>
+</p>
+<p><b>TS</b></p>
+<p>TS is a subclass of TSD that contains only <b>T</b>ime<b>S</b>tamps,
+but the data field is empty. A TS object is typically used to store a
+single spike train. To create a TS, 
+</p>
+<p><font face="Droid Sans Mono, sans-serif"><font size="2" style="font-size: 11pt">spikesTS
+= TS(spikeTimesVector);</font></font></p>
+<p>You can then use the TS object's methods:</p>
+<p><font face="Droid Sans Mono, sans-serif"><font size="2" style="font-size: 11pt">runningSpikesTS
+= spikesTS.restrict(isRunning); <font color="#009900">% extract
+spikes using IntervalSet isRunning from TSD example</font></font></font></p>
+<p><br><br>
+</p>
+<p><b>TSDArray</b></p>
+<p>TSDArray is a class that stores multiple TS or TSD objects.
+Usually this is used to store spike trains from multiple neurons. You
+probably won't ever use the constructor for this class because you'll
+more likely use one of the existing wrapper functions to load in your
+.res files and convert them to a TSD object. Internally, it contains
+a cell array of TS or TSD objects.</p>
+<p><font face="Droid Sans Mono, sans-serif"><font size="2" style="font-size: 11pt">isPYR
+= [0 1 1 0 0 1 1 0 0 1]; </font></font><font color="#009900"><font face="Droid Sans Mono, sans-serif"><font size="2" style="font-size: 11pt">%
+1 if it's a putative pyramidal cell</font></font></font></p>
+<p><font face="Droid Sans Mono, sans-serif"><font size="2" style="font-size: 11pt">PYRspikes
+= spikes(isPYR); <font color="#009900">% you can extract specific
+units from the TSDArray by addressing it like a normal vector in
+matlab</font></font></font></p>
+<p><font face="Droid Sans Mono, sans-serif"><font size="2" style="font-size: 11pt">PYRspikesRunningRate
+= PYRspikes.rate(isRunning); <font color="#009900">% spike rates of
+putative PYRs while the animal is running</font></font></font></p>
+<p><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">There
+are other methods as well:</font></font></p>
+<p><font face="Droid Sans Mono, sans-serif"><font size="2" style="font-size: 11pt">spikes.plot();
+<font color="#009900">% makes a raster plot</font></font></font></p>
+<p><font face="Droid Sans Mono, sans-serif"><font size="2" style="font-size: 11pt">allSpikes
+= [spikesSession1; spikesSession2]; <font color="#009900">% you can
+concatenate multiple TSDArrays into a single TSDArrays</font></font></font></p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+<p><br><br>
+</p>
+</body>
+</html>
