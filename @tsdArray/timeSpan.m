@@ -15,6 +15,7 @@ function is = timeSpan(S, type)
 %  	is - an intervalSet object
 %  
 %  v2.0 rewritten by Luke Sjulson, Aug 2017
+%  modified by Adrien Peyrache, Nov 2019
 
 
 if nargin<2
@@ -22,7 +23,17 @@ if nargin<2
 end
 
 % calculate union/intersection of whole tsdArray
-iSet = S.timeInterval(type);
-is = intervalSet(iSet.start(1), iSet.stop(end));
+st = Inf;
+en = -Inf;
 
+for ii=1:length(S)
+    s  = S.C{ii};
+%    iSet = s.timeInterval(type);
+    iSet = s.timeInterval;
+    iSetSt = Start(iSet);
+    iSetEn = End(iSet);
+    st = min(st,iSetSt(1));
+    en = max(en,iSetEn(end));
+end
 
+is = intervalSet(st,en);
