@@ -175,11 +175,13 @@ classdef intervalSet
                end
                
                if(any(diff(s) < 0))
-                  error('s must be sorted');
+                  warning('start times should be sorted - sorting now');
+                  s = sort(s);
                end
                
                if(any(diff(e) < 0))
-                  error('e must be sorted');
+                  warning('stop times should be sorted - sorting now');
+                  e = sort(e);
                end
                
                
